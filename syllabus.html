@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>סדנת בינה מלאכותית | technoda.org.il</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .goal {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .session {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .session:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .session-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .session-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-left: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .session-title {
+            flex: 1;
+        }
+
+        .session-title h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .session-duration {
+            color: #666;
+            font-size: 0.9em;
+            background: #f8f9fa;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .topics {
+            list-style: none;
+        }
+
+        .topics li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-right: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .topics li:last-child {
+            border-bottom: none;
+        }
+
+        .topics li:before {
+            content: "✨";
+            position: absolute;
+            right: 0;
+            top: 12px;
+            font-size: 1.2em;
+        }
+
+        .topics li:hover {
+            color: #667eea;
+            cursor: pointer;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .final-outcome {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .final-outcome h3 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: white;
+            font-size: 1.1em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .session-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .session-number {
+                margin: 0 0 15px 0;
+            }
+            
+            .tech-stack {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .animate-in {
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header animate-in">
+            <h1>🤖 סדנת בינה מלאכותית</h1>
+            <p>3 מפגשים פרונטליים × 1.5  שעות למפגש</p>
+            <div class="goal">
+                🎯 מטרה: הכרות עם כלים שימושיים לבינה מלאכותית לצורך ייעול הארגון
+            </div>
+        </div>
+
+        <div class="sessions-grid">
+            <div class="session animate-in" style="animation-delay: 0.2s;">
+                <div class="session-header">
+                    <div class="session-number">1</div>
+                    <div class="session-title">
+                        <h2>עולם הצ'אטבוטים וניתוח נתונים יעיל</h2>
+                    </div>
+                </div>
+                <ul class="topics">
+                    <li>יסודות הצ'אטבוטים ונוסחות פרומפט מנצחות</li>
+                    <li>מניפולציות ופורמולות לקבצי Excel</li>
+                    <li>יצירת גרפים מבסיס נתונים (למשל גוגל פורמס)</li>
+                    <li>יצירת תוכן מתוך תבנית מוכנה מראש (למשל מערכי שיעור, מכתבים רשמיים)</li>
+                    <li>בניית סוכן מותאם אישית (מחולל רקע של הטכנודע לתמונה, מנסח למכתבים ע"פ הוראות מוגדרות מראש)</li>
+                </ul>
+                <div class="session-outcome">
+                    <strong>🎯 תוצר סופי:</strong> הכשרת סוכן AI אישי שיעזור לכם בעבודה היומיומית
+                </div>
+            </div>
+
+            <div class="session animate-in" style="animation-delay: 0.4s;">
+                <div class="session-header">
+                    <div class="session-number">2</div>
+                    <div class="session-title">
+                        <h2>יצירת תוכן גרפי באמצעות AI</h2>
+                    </div>
+                </div>
+                <ul class="topics">
+                    <li><strong>Gamma</strong> – יצירת מצגות מטקסט / תוכן</li>
+                    <li><strong>RemoveBG</strong> - כלי איכותי למחיקת רקע</li>
+                    <li><strong>Canva</strong> - הכרות ראשונית עם הפלטפורמה הטובה והיעילה ביותר לעריכה</li>
+                    <li><strong>Leonardo.ai</strong> – הפקת תמונות וסרטונים קצרים מטקסט, תמונה להשראה</li>
+                </ul>
+                <div class="session-outcome">
+                    <strong>🎯 תוצר סופי:</strong> מצגת מיוחדת עם תמונות וסרטונים שיצרנו
+                </div>
+            </div>
+
+            <div class="session animate-in" style="animation-delay: 0.6s;">
+                <div class="session-header">
+                    <div class="session-number">3</div>
+                    <div class="session-title">
+                        <h2>בניית אפליקציית WEB והעלאתה לרשת</h2>
+                    </div>
+                </div>
+                <ul class="topics">
+                    <li>תכנון האפליקציה - ניתן להיעזר ב-ChatGPT</li>
+                    <li>כתיבת הקוד: HTML + JS + CSS בעזרת Claude</li>
+                    <li>העתקת הקוד ל-Visual Studio Code לבדיקה</li>
+                    <li>העלאת הקוד ל-GitHub לאחסון</li>
+                </ul>
+                <div class="session-outcome">
+                    <strong>🎯 תוצר סופי:</strong> אפליקציית WEB פועלת על רשת האינטרנט - בדומה לעמוד זה
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight animate-in" style="animation-delay: 0.8s;">
+            הסילבוס דינאמי ויכול להשתנות בהתאם לקצב התקדמות
+        </div>
+
+
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all session cards
+            document.querySelectorAll('.session').forEach(session => {
+                observer.observe(session);
+            });
+
+            // Add click effects to topics
+            document.querySelectorAll('.topics li').forEach(topic => {
+                topic.addEventListener('click', function() {
+                    this.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                    this.style.color = 'white';
+                    this.style.borderRadius = '10px';
+                    this.style.padding = '12px 15px';
+                    
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.style.borderRadius = '';
+                        this.style.padding = '12px 0';
+                    }, 2000);
+                });
+            });
+
+            // Add floating animation to session outcomes
+            document.querySelectorAll('.session-outcome').forEach((item, index) => {
+                setInterval(() => {
+                    item.style.transform = `translateY(${Math.sin(Date.now() * 0.001 + index) * 3}px)`;
+                }, 50);
+            });
+
+            // Add parallax effect to background
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallax = document.body;
+                const speed = scrolled * 0.5;
+                parallax.style.backgroundPosition = `center ${speed}px`;
+            });
+        });
+    </script>
+</body>
+</html>
